@@ -1,6 +1,6 @@
 nextflow.enable.dsl=2
 
-params.num_regions = 20//40000
+params.num_regions = 10
 params.suffix_length = 5
 outdir = "results"
 
@@ -11,19 +11,24 @@ process split_fastq {
     tuple val(name), path(fastq)
 
     output:
-    tuple val(name), path("${name}-${/[0-9]/*params.suffix_length}.fastq")
+    tuple val(name), path("${name}_*")
 
     shell:
-    '''
-    cat "!{fastq}" | split \\
-        -a "!{params.suffix_length}" \\
-        -d \\
-        -l "!{params.num_regions}" \\
-        --filter='gzip > ${FILE}.fastq' \\
-        - \\
-        "!{name}-"
-    '''
+    """
+    split ${fastq} -a ${params.suffix_length} -d -l ${params.num_regions} test_1_
+    """
 }
+
+
+    // '''
+    // cat "!{fastq}" | split \\
+    //     -a "!{params.suffix_length}" \\
+    //     -d \\
+    //     -l "!{params.num_regions}" \\
+    //     --filter='gzip > ${FILE}.fastq' \\
+    //     - \\
+    //     "!{name}-"
+    // '''
 
 process fastp {
     publishDir outdir
