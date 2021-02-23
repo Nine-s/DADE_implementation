@@ -1,0 +1,2 @@
+task_id	hash	native_id	name	status	exit	submit	duration	realtime	%cpu	peak_rss	peak_vmem	rchar	wchar
+1	52/b868be	19816	P2	COMPLETED	0	2021-02-22 14:47:35.409	234ms	8ms	80.0%	0	0	67.9 KB	18.7 KB
